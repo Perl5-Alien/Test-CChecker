@@ -5,6 +5,9 @@ use warnings;
 use base qw( Test::Builder::Module );
 use ExtUtils::CChecker;
 use Capture::Tiny qw( capture_merged );
+use Text::ParseWords qw( shellwords );
+use Env qw( @LD_LIBRARY_PATH );
+use File::Spec;
 
 our @EXPORT = qw(
   cc
@@ -76,6 +79,7 @@ do {
 =head2 compile_run_ok
 
  compile_run_ok $c_source, $message;
+
  compile_run_ok {
    source => $c_source,
    extra_compiler_flags => \@cflags,
@@ -138,8 +142,17 @@ sub compile_with_alien ($)
 {
   my $alien = shift;
   $alien = $alien->new unless ref $alien;
-  cc->push_extra_compiler_flags($alien->cflags);
-  cc->push_extra_linker_flags($alien->libs);
+  cc->push_extra_compiler_flags(shellwords $alien->cflags) if $alien->cflags !~ /^\s*$/;
+  cc->push_extra_linker_flags(shellwords $alien->libs)     if $alien->libs   !~ /^\s*$/;
+  if($alien->can('dist_dir'))
+  {
+    my $dir = File::Spec->catdir($alien->dist_dir, 'lib');
+    if(-d $dir)
+    {
+      unshift @LD_LIBRARY_PATH, $dir;
+    }
+  }
+  
   return;
 }
 

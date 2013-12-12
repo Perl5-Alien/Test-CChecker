@@ -46,6 +46,7 @@ This is mainly useful for adding compiler or linker flags:
 ## compile\_run\_ok
 
     compile_run_ok $c_source, $message;
+
     compile_run_ok {
       source => $c_source,
       extra_compiler_flags => \@cflags,
