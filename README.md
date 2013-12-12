@@ -75,6 +75,29 @@ an instance of that class.  The instance of the Alien class is expected to
 implement `cflags` and `libs` methods that return the compiler and library
 flags respectively.
 
+If you are testing an Alien module after it has been built, but before it has
+been installed (for example if you are writing the test suite FOR the Alien
+module itself), you need to install to a temporary directory named `_test`.
+If you are using [Alien::Base](https://metacpan.org/pod/Alien::Base), the easiest way to do this is to add a 
+`make install` with `DISTDIR` set to `_test`:
+
+    Alien::Base::Module::Build->new(
+      ...
+      "alien_build_commands" => [
+        "%pconfigure --prefix=%s",
+        "make",
+        "make DESTDIR=`pwd`/../../_test install",
+      ],
+      ...
+    )->create_build_script;
+
+or if you are using [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla), something like this:
+
+    [Alien]
+    build_command = %pconfigure --prefix=%s --disable-bsdtar --disable-bsdcpio
+    build_command = make
+    build_command = make DESTDIR=`pwd`/../../_test install
+
 ## compile\_output\_to\_nowhere
 
     compile_output_to_nowhere

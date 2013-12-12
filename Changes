@@ -2,5 +2,8 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.02      2013-12-12 16:17:01 -0500
+  - detect and handle when testing an Alien module that hasn't been installed yet
+
 0.01      2013-12-12 12:12:06 -0500
   - initial version
