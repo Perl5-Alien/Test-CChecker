@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.04      2013-12-12 17:06:12 -0500
+  - first CPAN release!
   - use ExtUtils::CChecker quiet option to turn on noisyness instead of hacking
     ExtUtils::CBuilder (thanks Paul Evans for a quick fix on this)
 
