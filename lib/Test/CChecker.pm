@@ -9,6 +9,7 @@ use Capture::Tiny qw( capture_merged );
 our @EXPORT = qw(
   cc
   compile_run_ok
+  compile_with_alien
   compile_output_to_nowhere
   compile_output_to_diag
   compile_output_to_note
@@ -19,7 +20,10 @@ our @EXPORT = qw(
 
 =head1 SYNOPSIS
 
+ use Alien::Foo;
  use Test::CChecker;
+ 
+ compile_with_alien 'Alien::Foo';
  
  compile_run_ok <<C_CODE, "basic compile test";
  int
@@ -115,6 +119,28 @@ sub compile_run_ok ($;$)
   {
     $tb->note($out);
   }
+}
+
+=head2 compile_with_alien
+
+ use Alien::Foo;
+ compile_with_alien 'Alien::Foo';
+
+Specifies an Alien module to use to get compiler flags and libraries.  You
+may pass in either the name of the class (it must already be loaded), or
+an instance of that class.  The instance of the Alien class is expected to
+implement C<cflags> and C<libs> methods that return the compiler and library
+flags respectively.
+
+=cut
+
+sub compile_with_alien ($)
+{
+  my $alien = shift;
+  $alien = $alien->new unless ref $alien;
+  cc->push_extra_compiler_flags($alien->cflags);
+  cc->push_extra_linker_flags($alien->libs);
+  return;
 }
 
 =head2 compile_output_to_nowhere

@@ -4,7 +4,10 @@ test-time utilities for checking C headers, libraries, or OS features
 
 # SYNOPSIS
 
+    use Alien::Foo;
     use Test::CChecker;
+    
+    compile_with_alien 'Alien::Foo';
     
     compile_run_ok <<C_CODE, "basic compile test";
     int
@@ -59,6 +62,17 @@ If the test fails, then the complete output will be reported using
 
 You can have it report the output on success with [#compile_output_to_diag](https://metacpan.org/pod/#compile_output_to_diag)
 or [#compile_output_to_note](https://metacpan.org/pod/#compile_output_to_note).
+
+## compile\_with\_alien
+
+    use Alien::Foo;
+    compile_with_alien 'Alien::Foo';
+
+Specifies an Alien module to use to get compiler flags and libraries.  You
+may pass in either the name of the class (it must already be loaded), or
+an instance of that class.  The instance of the Alien class is expected to
+implement `cflags` and `libs` methods that return the compiler and library
+flags respectively.
 
 ## compile\_output\_to\_nowhere
 
