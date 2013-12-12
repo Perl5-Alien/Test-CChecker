@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - use ExtUtils::CChecker quiet option to turn on noisyness instead of hacking
+    ExtUtils::CBuilder (thanks Paul Evans for a quick fix on this)
 
 0.03      2013-12-12 16:34:30 -0500
   - rm dep on File::ShareDir (can't be used before install anyway)

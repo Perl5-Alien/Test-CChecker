@@ -72,7 +72,7 @@ do {
   {
     unless(defined $cc)
     {
-      $cc = ExtUtils::CChecker->new;
+      $cc = ExtUtils::CChecker->new( quiet => 0 );
     }
     $cc;
   }
@@ -109,9 +109,6 @@ sub compile_run_ok ($;$)
   $message ||= "compile ok";
   my $cc = cc();
   my $tb = __PACKAGE__->builder;
-  
-  # TODO: fix in CChecker so that we don't have to do this.
-  local $cc->cbuilder->{quiet} = 0;
   
   my $ok;
   my $out = capture_merged { $ok = $cc->try_compile_run(ref($args) eq 'HASH' ? %$args : $args) };
