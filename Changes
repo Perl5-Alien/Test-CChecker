@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.03      2013-12-12 16:34:30 -0500
   - rm dep on File::ShareDir (can't be used before install anyway)
 
 0.02      2013-12-12 16:17:01 -0500
