@@ -168,6 +168,12 @@ sub compile_with_alien ($)
   my $alien = shift;
   $alien = $alien->new unless ref $alien;
 
+  if($alien->can('dist_dir'))
+  {
+    my $dir = File::Spec->catdir($alien->dist_dir, 'lib');
+    unshift @LD_LIBRARY_PATH, $dir if -d $dir;
+  }
+  
   my $tdir = File::Spec->catdir($FindBin::Bin, File::Spec->updir, '_test');
   if(-d $tdir)
   {
@@ -175,7 +181,7 @@ sub compile_with_alien ($)
       /^-I(.*)$/ ? ("-I".File::Spec->catdir($tdir, $1), $_) : ($_)
     } shellwords $alien->cflags);
     cc->push_extra_linker_flags(map {
-      /^-L(.*)$/ ? ("-I".File::Spec->catdir($tdir, $1), $_) : ($_)
+      /^-L(.*)$/ ? ( map { push @LD_LIBRARY_PATH, $_; "-L$_" } File::Spec->catdir($tdir, $1), $_) : ($_)
     } shellwords $alien->libs);
   }
   else
@@ -184,20 +190,6 @@ sub compile_with_alien ($)
     cc->push_extra_linker_flags(shellwords $alien->libs);
   }
 
-  if($alien->can('dist_dir'))
-  {
-    require File::ShareDir;
-    my $dist = blessed $alien;
-    $dist =~ s/::/-/g;
-
-    local @INC = grep { ! -d $tdir || ! /blib/ } @INC;
-
-    foreach my $dir (map { File::Spec->catdir(@$_) } [$alien->dist_dir, 'lib'], [$tdir, File::ShareDir::dist_dir($dist), 'lib'])
-    {
-      unshift @LD_LIBRARY_PATH, $dir if -d $dir;
-    }
-  }
-  
   return;
 }
 
