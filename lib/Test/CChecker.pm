@@ -8,6 +8,8 @@ use Capture::Tiny qw( capture_merged );
 use Text::ParseWords qw( shellwords );
 use Env qw( @LD_LIBRARY_PATH );
 use File::Spec;
+use FindBin ();
+use Scalar::Util qw( blessed );
 
 our @EXPORT = qw(
   cc
@@ -136,20 +138,63 @@ an instance of that class.  The instance of the Alien class is expected to
 implement C<cflags> and C<libs> methods that return the compiler and library
 flags respectively.
 
+If you are testing an Alien module after it has been built, but before it has
+been installed (for example if you are writing the test suite FOR the Alien
+module itself), you need to install to a temporary directory named C<_test>.
+If you are using L<Alien::Base>, the easiest way to do this is to add a 
+C<make install> with C<DISTDIR> set to C<_test>:
+
+ Alien::Base::Module::Build->new(
+   ...
+   "alien_build_commands" => [
+     "%pconfigure --prefix=%s",
+     "make",
+     "make DESTDIR=`pwd`/../../_test install",
+   ],
+   ...
+ )->create_build_script;
+
+or if you are using L<Dist::Zilla>, something like this:
+
+ [Alien]
+ build_command = %pconfigure --prefix=%s --disable-bsdtar --disable-bsdcpio
+ build_command = make
+ build_command = make DESTDIR=`pwd`/../../_test install
+
 =cut
 
 sub compile_with_alien ($)
 {
   my $alien = shift;
   $alien = $alien->new unless ref $alien;
-  cc->push_extra_compiler_flags(shellwords $alien->cflags) if $alien->cflags !~ /^\s*$/;
-  cc->push_extra_linker_flags(shellwords $alien->libs)     if $alien->libs   !~ /^\s*$/;
+
+  my $tdir = File::Spec->catdir($FindBin::Bin, File::Spec->updir, '_test');
+  if(-d $tdir)
+  {
+    cc->push_extra_compiler_flags(map {
+      /^-I(.*)$/ ? ("-I".File::Spec->catdir($tdir, $1), $_) : ($_)
+    } shellwords $alien->cflags);
+    cc->push_extra_linker_flags(map {
+      /^-L(.*)$/ ? ("-I".File::Spec->catdir($tdir, $1), $_) : ($_)
+    } shellwords $alien->libs);
+  }
+  else
+  {
+    cc->push_extra_compiler_flags(shellwords $alien->cflags);
+    cc->push_extra_linker_flags(shellwords $alien->libs);
+  }
+
   if($alien->can('dist_dir'))
   {
-    my $dir = File::Spec->catdir($alien->dist_dir, 'lib');
-    if(-d $dir)
+    require File::ShareDir;
+    my $dist = blessed $alien;
+    $dist =~ s/::/-/g;
+
+    local @INC = grep { ! -d $tdir || ! /blib/ } @INC;
+
+    foreach my $dir (map { File::Spec->catdir(@$_) } [$alien->dist_dir, 'lib'], [$tdir, File::ShareDir::dist_dir($dist), 'lib'])
     {
-      unshift @LD_LIBRARY_PATH, $dir;
+      unshift @LD_LIBRARY_PATH, $dir if -d $dir;
     }
   }
   
