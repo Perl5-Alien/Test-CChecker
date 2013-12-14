@@ -1,4 +1,4 @@
-# Test::CChecker
+# Test::CChecker [![Build Status](https://secure.travis-ci.org/plicease/Test-CChecker.png)](http://travis-ci.org/plicease/Test-CChecker)
 
 test-time utilities for checking C headers, libraries, or OS features
 
