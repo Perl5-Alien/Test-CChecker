@@ -64,6 +64,9 @@ If the test fails, then the complete output will be reported using
 You can have it report the output on success with [#compile_output_to_diag](https://metacpan.org/pod/#compile_output_to_diag)
 or [#compile_output_to_note](https://metacpan.org/pod/#compile_output_to_note).
 
+In addition to the pass/fail and diagnostic output, this function
+will return true or false on success and failure respectively.
+
 ## compile\_with\_alien
 
     use Alien::Foo;
