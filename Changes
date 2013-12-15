@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.05      2013-12-15 06:37:53 -0500
   - compile_run_ok returns true on success, false on failure
 
 0.04      2013-12-12 17:06:12 -0500
