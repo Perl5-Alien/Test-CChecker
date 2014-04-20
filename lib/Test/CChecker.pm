@@ -20,7 +20,7 @@ our @EXPORT = qw(
   compile_output_to_note
 );
 
-# ABSTRACT: test-time utilities for checking C headers, libraries, or OS features
+# ABSTRACT: Test-time utilities for checking C headers, libraries, or OS features
 # VERSION
 
 =head1 SYNOPSIS
