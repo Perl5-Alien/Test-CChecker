@@ -2,6 +2,9 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.06      2015-06-22 14:08:07 -0400
+  - Catch exception and ignore if thrown by Alien::*->dist_dir 
+
 0.05      2013-12-15 06:37:53 -0500
   - compile_run_ok returns true on success, false on failure
 
