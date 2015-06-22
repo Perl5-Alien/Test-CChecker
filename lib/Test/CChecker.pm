@@ -172,8 +172,8 @@ sub compile_with_alien ($)
 
   if($alien->can('dist_dir'))
   {
-    my $dir = File::Spec->catdir($alien->dist_dir, 'lib');
-    unshift @LD_LIBRARY_PATH, $dir if -d $dir;
+    my $dir = eval { File::Spec->catdir($alien->dist_dir, 'lib') };
+    unshift @LD_LIBRARY_PATH, $dir if defined $dir && -d $dir;
   }
   
   my $tdir = File::Spec->catdir($FindBin::Bin, File::Spec->updir, '_test');
