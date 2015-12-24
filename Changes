@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Added compile_ok function
 
 0.06      2015-06-22 14:08:07 -0400
   - Catch exception and ignore if thrown by Alien::*->dist_dir 

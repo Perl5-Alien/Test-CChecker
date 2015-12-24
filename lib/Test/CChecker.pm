@@ -9,10 +9,12 @@ use Text::ParseWords qw( shellwords );
 use Env qw( @LD_LIBRARY_PATH );
 use File::Spec;
 use FindBin ();
+use File::Temp ();
 use Scalar::Util qw( blessed );
 
 our @EXPORT = qw(
   cc
+  compile_ok
   compile_run_ok
   compile_with_alien
   compile_output_to_nowhere
@@ -70,11 +72,7 @@ do {
   my $cc;
   sub cc ()
   {
-    unless(defined $cc)
-    {
-      $cc = ExtUtils::CChecker->new( quiet => 0 );
-    }
-    $cc;
+    $cc ||= ExtUtils::CChecker->new( quiet => 0 );
   }
 };
 
@@ -125,6 +123,55 @@ sub compile_run_ok ($;$)
   {
     $tb->note($out);
   }
+  
+  $ok;
+}
+
+=head2 compile_ok
+
+ compile_ok $c_source, $message;
+
+ compile_ok {
+   source => $c_source,
+   extra_compiler_flags => \@cflags,
+ }, $message;
+
+This is like L</compile_run_ok>, except it stops after compiling and
+does not attempt to link or run.
+
+=cut
+
+sub compile_ok ($;$)
+{
+  my($args, $message) = @_;
+  $message ||= "compile ok";
+  $args = ref $args ? $args : { source => $args };
+  my $cc = cc();
+  my $tb = __PACKAGE__->builder;
+
+  my($fh, $filename) = File::Temp::tempfile("ccheckerXXXXX", SUFFIX => '.c');
+  print $fh $args->{source};
+  close $fh;
+  my $obj;
+  my %compile = ( source => $filename );
+  $compile{extra_compiler_flags} = $args->{extra_compiler_flags} if defined $args->{extra_compiler_flags};
+  my $err;
+  my $out = capture_merged { $obj = eval { $cc->compile(%compile) }; $err = $@ };
+  
+  my $ok = !!$obj;
+  unlink $filename if $ok;
+  unlink $obj if defined $obj && -f $obj;
+  $tb->ok($ok, $message);
+  if(!$ok || $output eq 'diag')
+  {
+    $tb->diag($out);
+  }
+  elsif($output eq 'note')
+  {
+    $tb->note($out);
+  }
+  
+  $tb->diag($err) if $err;
   
   $ok;
 }
