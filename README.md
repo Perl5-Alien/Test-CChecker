@@ -61,8 +61,8 @@ be passed unmodified as a hash to [ExtUtils::CChecker](https://metacpan.org/pod/
 If the test fails, then the complete output will be reported using
 [Test::More](https://metacpan.org/pod/Test::More) `diag`.
 
-You can have it report the output on success with [#compile\_output\_to\_diag](https://metacpan.org/pod/#compile_output_to_diag)
-or [#compile\_output\_to\_note](https://metacpan.org/pod/#compile_output_to_note).
+You can have it report the output on success with ["compile\_output\_to\_diag"](#compile_output_to_diag)
+or ["compile\_output\_to\_note"](#compile_output_to_note).
 
 In addition to the pass/fail and diagnostic output, this function
 will return true or false on success and failure respectively.

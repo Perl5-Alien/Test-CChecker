@@ -94,8 +94,8 @@ be passed unmodified as a hash to L<ExtUtils::CChecker> C<try_compile_run>).
 If the test fails, then the complete output will be reported using
 L<Test::More> C<diag>.
 
-You can have it report the output on success with L<#compile_output_to_diag>
-or L<#compile_output_to_note>.
+You can have it report the output on success with L</compile_output_to_diag>
+or L</compile_output_to_note>.
 
 In addition to the pass/fail and diagnostic output, this function
 will return true or false on success and failure respectively.
