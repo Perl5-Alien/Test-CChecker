@@ -67,6 +67,18 @@ or [#compile\_output\_to\_note](https://metacpan.org/pod/#compile_output_to_note
 In addition to the pass/fail and diagnostic output, this function
 will return true or false on success and failure respectively.
 
+## compile\_ok
+
+    compile_ok $c_source, $message;
+
+    compile_ok {
+      source => $c_source,
+      extra_compiler_flags => \@cflags,
+    }, $message;
+
+This is like ["compile\_run\_ok"](#compile_run_ok), except it stops after compiling and
+does not attempt to link or run.
+
 ## compile\_with\_alien
 
     use Alien::Foo;
@@ -121,7 +133,7 @@ Report output using [Test::More](https://metacpan.org/pod/Test::More) `note` on 
 
 # AUTHOR
 
-Graham Ollis <plicease@cpan.org>
+Graham Ollis &lt;plicease@cpan.org>
 
 # COPYRIGHT AND LICENSE
 

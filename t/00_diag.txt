@@ -1,5 +1,0 @@
-Capture::Tiny
-ExtUtils::CChecker
-Module::Build
-Test::Builder::Module
-Test::More
