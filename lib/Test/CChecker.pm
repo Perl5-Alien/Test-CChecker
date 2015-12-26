@@ -42,6 +42,11 @@ our @EXPORT = qw(
 
 =head1 DESCRIPTION
 
+B<NOTE>: The intention of this module was always to test L<Alien> modules
+(both L<Alien::Base> based and non-L<Alien::Base> based modules).  It has a number
+of shortcomings that I believe to be better addressed by L<Test::Alien>,
+so please consider using that for new projects, or even migrating existing code.
+
 This module is a very thin convenience wrapper around L<ExtUtils::CChecker> to make
 it useful for use in a test context.  It is intended for use with Alien modules
 which need to verify that libraries work as intended with the Compiler and

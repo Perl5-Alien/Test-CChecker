@@ -19,6 +19,11 @@ Test-time utilities for checking C headers, libraries, or OS features
 
 # DESCRIPTION
 
+**NOTE**: The intention of this module was always to test [Alien](https://metacpan.org/pod/Alien) modules
+(both [Alien::Base](https://metacpan.org/pod/Alien::Base) based and non-[Alien::Base](https://metacpan.org/pod/Alien::Base) based modules).  It has a number
+of shortcomings that I believe to be better addressed by [Test::Alien](https://metacpan.org/pod/Test::Alien),
+so please consider using that for new projects, or even migrating existing code.
+
 This module is a very thin convenience wrapper around [ExtUtils::CChecker](https://metacpan.org/pod/ExtUtils::CChecker) to make
 it useful for use in a test context.  It is intended for use with Alien modules
 which need to verify that libraries work as intended with the Compiler and
