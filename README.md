@@ -138,7 +138,7 @@ Report output using [Test::More](https://metacpan.org/pod/Test::More) `note` on 
 
 # AUTHOR
 
-Graham Ollis &lt;plicease@cpan.org>
+Graham Ollis <plicease@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
