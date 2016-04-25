@@ -22,7 +22,7 @@ our @EXPORT = qw(
   compile_output_to_note
 );
 
-# ABSTRACT: Test-time utilities for checking C headers, libraries, or OS features
+# ABSTRACT: Test-time utilities for checking C headers, libraries, or OS features (DEPRECATED)
 # VERSION
 
 =head1 SYNOPSIS
@@ -42,7 +42,7 @@ our @EXPORT = qw(
 
 =head1 DESCRIPTION
 
-B<NOTE>: The intention of this module was always to test L<Alien> modules
+B<DEPRECATED>: The intention of this module was always to test L<Alien> modules
 (both L<Alien::Base> based and non-L<Alien::Base> based modules).  It has a number
 of shortcomings that I believe to be better addressed by L<Test::Alien>,
 so please consider using that for new projects, or even migrating existing code.
@@ -287,3 +287,11 @@ sub compile_output_to_note ()
 }
 
 1;
+
+=head1 SEE ALSO
+
+Please consider using the official replacement:
+
+L<Test::Alien>
+
+=cut

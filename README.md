@@ -1,6 +1,6 @@
-# Test::CChecker [![Build Status](https://secure.travis-ci.org/plicease/Test-CChecker.png)](http://travis-ci.org/plicease/Test-CChecker)
+# Test::CChecker [![Build Status](https://secure.travis-ci.org/Perl5-Alien/Test-CChecker.png)](http://travis-ci.org/Perl5-Alien/Test-CChecker)
 
-Test-time utilities for checking C headers, libraries, or OS features
+Test-time utilities for checking C headers, libraries, or OS features (DEPRECATED)
 
 # SYNOPSIS
 
@@ -19,7 +19,7 @@ Test-time utilities for checking C headers, libraries, or OS features
 
 # DESCRIPTION
 
-**NOTE**: The intention of this module was always to test [Alien](https://metacpan.org/pod/Alien) modules
+**DEPRECATED**: The intention of this module was always to test [Alien](https://metacpan.org/pod/Alien) modules
 (both [Alien::Base](https://metacpan.org/pod/Alien::Base) based and non-[Alien::Base](https://metacpan.org/pod/Alien::Base) based modules).  It has a number
 of shortcomings that I believe to be better addressed by [Test::Alien](https://metacpan.org/pod/Test::Alien),
 so please consider using that for new projects, or even migrating existing code.
@@ -135,6 +135,12 @@ Report output using [Test::More](https://metacpan.org/pod/Test::More) `diag` on 
     compile_output_to_note;
 
 Report output using [Test::More](https://metacpan.org/pod/Test::More) `note` on success (output is always reported on failure using `diag`).
+
+# SEE ALSO
+
+Please consider using the official replacement:
+
+[Test::Alien](https://metacpan.org/pod/Test::Alien)
 
 # AUTHOR
 

@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Officially deprecating in favor of Test::Alien
 
 0.07      2015-12-23 19:44:32 -0700
   - Added compile_ok function
