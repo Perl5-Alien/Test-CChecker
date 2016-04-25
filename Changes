@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.08      2016-04-25 17:24:46 -0400
   - Officially deprecating in favor of Test::Alien
 
 0.07      2015-12-23 19:44:32 -0700
