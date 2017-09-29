@@ -13,7 +13,6 @@ $modules{$_} = $_ for qw(
   Capture::Tiny
   Carp
   ExtUtils::CChecker
-  File::Temp
   Module::Build
   Test::Builder::Module
   Test::More
