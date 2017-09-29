@@ -11,7 +11,6 @@ use File::Spec;
 use FindBin ();
 use File::Temp ();
 use Scalar::Util qw( blessed );
-use Carp ();
 
 our @EXPORT = qw(
   cc
