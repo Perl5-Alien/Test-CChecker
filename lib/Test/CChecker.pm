@@ -26,7 +26,7 @@ my $warn_deprecated = do {
 
   my $warned = 0;
 
-  _warn_deprecated
+  sub
   {
     return if $warned++;
     my $tb = __PACKAGE__->builder;
@@ -41,7 +41,7 @@ my $warn_deprecated = do {
     $tb->diag('');
     $tb->diag('');
   }
-}
+};
 
 # ABSTRACT: Test-time utilities for checking C headers, libraries, or OS features (DEPRECATED)
 # VERSION
