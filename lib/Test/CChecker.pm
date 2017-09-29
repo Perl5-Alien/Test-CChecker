@@ -11,6 +11,7 @@ use File::Spec;
 use FindBin ();
 use File::Temp ();
 use Scalar::Util qw( blessed );
+use Carp ();
 
 our @EXPORT = qw(
   cc
@@ -21,6 +22,27 @@ our @EXPORT = qw(
   compile_output_to_diag
   compile_output_to_note
 );
+
+{
+
+  my $warned = 0;
+
+  sub _warn_deprecated
+  {
+    return if $warned++;
+    my $tb = __PACKAGE__->builder;
+    $tb->diag('');
+    $tb->diag('');
+    $tb->diag('');
+    $tb->diag(' ********************************************* ');
+    $tb->diag(' * WARNING:                                  * ');
+    $tb->diag(' * Test::CChecker has been deprecated!       * ');
+    $tb->diag(' * Please use Test::Alien instead.           * ');
+    $tb->diag(' ********************************************* ');
+    $tb->diag('');
+    $tb->diag('');
+  }
+}
 
 # ABSTRACT: Test-time utilities for checking C headers, libraries, or OS features (DEPRECATED)
 # VERSION
@@ -77,6 +99,7 @@ do {
   my $cc;
   sub cc ()
   {
+    _warn_deprecated();
     $cc ||= ExtUtils::CChecker->new( quiet => 0 );
   }
 };
@@ -111,6 +134,7 @@ my $output = '';
 
 sub compile_run_ok ($;$)
 {
+  _warn_deprecated();
   my($args, $message) = @_;
   $message ||= "compile ok";
   my $cc = cc();
@@ -148,6 +172,7 @@ does not attempt to link or run.
 
 sub compile_ok ($;$)
 {
+  _warn_deprecated();
   my($args, $message) = @_;
   $message ||= "compile ok";
   $args = ref $args ? $args : { source => $args };
@@ -219,6 +244,7 @@ or if you are using L<Dist::Zilla>, something like this:
 
 sub compile_with_alien ($)
 {
+  _warn_deprecated();
   my $alien = shift;
   $alien = $alien->new unless ref $alien;
 
@@ -257,6 +283,7 @@ Do not report output unless there is a failure.  This is the default behavior.
 
 sub compile_output_to_nowhere ()
 {
+  _warn_deprecated();
   $output = '';
 }
 
@@ -270,6 +297,7 @@ Report output using L<Test::More> C<diag> on success (output is always reported 
 
 sub compile_output_to_diag ()
 {
+  _warn_deprecated();
   $output = 'diag';
 }
 
@@ -283,6 +311,7 @@ Report output using L<Test::More> C<note> on success (output is always reported 
 
 sub compile_output_to_note ()
 {
+  _warn_deprecated();
   $output = 'note';
 }
 

@@ -11,6 +11,7 @@ my $post_diag;
 
 $modules{$_} = $_ for qw(
   Capture::Tiny
+  Carp
   ExtUtils::CChecker
   File::Temp
   Module::Build
