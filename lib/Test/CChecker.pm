@@ -105,6 +105,7 @@ do {
 
 =head2 compile_run_ok
 
+ compile_run_ok $c_source;
  compile_run_ok $c_source, $message;
 
  compile_run_ok {
@@ -113,7 +114,7 @@ do {
    extra_linker_flags => \@libs,
  }, $message;
 
-This test attempts to compile the given c_source and passes if it
+This test attempts to compile the given c source and passes if it
 runs with return value of zero.  The first argument can be either
 a string containing the C source code, or a hashref (which will
 be passed unmodified as a hash to L<ExtUtils::CChecker> C<try_compile_run>).

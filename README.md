@@ -50,6 +50,7 @@ This is mainly useful for adding compiler or linker flags:
 
 ## compile\_run\_ok
 
+    compile_run_ok $c_source;
     compile_run_ok $c_source, $message;
 
     compile_run_ok {
@@ -58,7 +59,7 @@ This is mainly useful for adding compiler or linker flags:
       extra_linker_flags => \@libs,
     }, $message;
 
-This test attempts to compile the given c\_source and passes if it
+This test attempts to compile the given c source and passes if it
 runs with return value of zero.  The first argument can be either
 a string containing the C source code, or a hashref (which will
 be passed unmodified as a hash to [ExtUtils::CChecker](https://metacpan.org/pod/ExtUtils::CChecker) `try_compile_run`).
