@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Archiving github repository, you can file bugs with Alien-Build.
 
 0.08      2016-04-25 17:24:46 -0400
   - Officially deprecating in favor of Test::Alien
