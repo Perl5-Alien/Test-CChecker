@@ -12,7 +12,7 @@ my $post_diag;
 $modules{$_} = $_ for qw(
   Capture::Tiny
   ExtUtils::CChecker
-  Module::Build
+  ExtUtils::MakeMaker
   Test::Builder::Module
   Test::More
 );
